@@ -1,3 +1,4 @@
+```mermaid
 erDiagram
 	User -- Tracking : references
 
@@ -13,3 +14,4 @@ erDiagram
 		TIMESTAMP TimeStamp
 		INTEGER UserId
 	}
+```
