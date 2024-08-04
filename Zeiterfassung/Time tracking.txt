@@ -1,0 +1,6 @@
+Time tracking
+
+Webassembly
+saves data in local storage
+can scan qr code to connect to backend server to sync data to, encrypted
+when wanting to move to different server, sync/download from current sync serrver, connect to new server and sync again
