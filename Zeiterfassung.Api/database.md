@@ -1,17 +1,17 @@
 ```mermaid
 erDiagram
-	User -- Tracking : references
-
 	User {
-		INTEGER Id
+		INTEGER Id PK
 		VARCHAR(255) Guid
 		TIMESTAMP CreatedAt
 	}
 
 	Tracking {
-		INTEGER Id
+		INTEGER Id PK
 		INTEGER Type
 		TIMESTAMP TimeStamp
-		INTEGER UserId
+		INTEGER UserId FK
 	}
+
+	User ||--|{ Tracking : "one - many"
 ```
