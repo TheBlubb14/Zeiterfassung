@@ -361,3 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Sqlite
+Zeiterfassung.Api/*.db
+Zeiterfassung.Api/*.db-shm
+Zeiterfassung.Api/*.db-wal
