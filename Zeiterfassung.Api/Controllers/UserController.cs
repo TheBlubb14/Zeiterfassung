@@ -17,4 +17,11 @@ public class UserController(ILogger<UserController> logger) : ControllerBase
         db.SaveChanges();
         return TypedResults.Ok(user.Entity.Id.ToString());
     }
+
+    [AllowAnonymous]
+    [HttpGet("Ping")]
+    public Ok<string> Ping()
+    {
+        return TypedResults.Ok("pong");
+    }
 }

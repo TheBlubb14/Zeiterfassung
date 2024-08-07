@@ -1,28 +1,28 @@
 ﻿@page "/"
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject ApiClient api
 
 <PageTitle>Home</PageTitle>
 
+<MudTextField T="string" Label="Server Url" InputType="InputType.Url" @bind-Value="ServerUrl" Clearable="true" />
+<MudTextField T="string" Label="UUID" InputType="InputType.Text" @bind-Value="UUID" Clearable="true" />
+<MudButton Variant="Variant.Filled" @onclick="Register" Disabled="RegisterDisabled">Register at Server</MudButton>
+
+<br />
 <MudToggleIconButton Toggled="@AlarmOn" ToggledChanged="OnToggledChanged"
-                     Icon="@Icons.Material.Filled.AlarmOff" Color="@Color.Error" title=@(AlarmOn ? "On" : "Off")
+                     Icon="@Icons.Material.Filled.AlarmOff" Color="@Color.Error" title=@(AlarmOn ? "Started" : "Stopped")
                      ToggledIcon="@Icons.Material.Filled.AlarmOn" ToggledColor="@Color.Success" />
 
-<span>Alarm is @(AlarmOn ? "On" : "Off")</span>
-<span>@($"I have sssaaaa switched on {SwitchedOnCount} times")</span>
 
-
-@code{
-    public bool AlarmOn { get; set; }
-    public int SwitchedOnCount { get; set; }
-
-    public void OnToggledChanged(bool toggled)
+<span>Tracking @(AlarmOn ? "Started" : "Stopped")</span>
+<br />
+<span>
+    Server Status: @if (ServerReachable)
     {
-        // Because variable is not two-way bound, we need to update it ourselves.
-        AlarmOn = toggled;
-
-        if (AlarmOn)
-        {
-            SwitchedOnCount++;
-        }
+        <MudIcon Icon="@Icons.Material.Filled.Cloud" Color="Color.Success" />
     }
-}
+    else
+    {
+        <MudIcon Icon="@Icons.Material.Filled.CloudOff" Color="Color.Error" />
+    }
+</span>

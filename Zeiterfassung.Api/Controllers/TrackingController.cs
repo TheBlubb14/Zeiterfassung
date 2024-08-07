@@ -48,14 +48,35 @@ public class TrackingController(ILogger<TrackingController> logger) : Controller
         return stopTime;
     }
 
-    [HttpPost("IsRunning")]
+    [HttpGet("IsRunning")]
     public bool IsRunning(AppDbContext db, CallerContext callerContext)
     {
         return db.Users
             .Include(x => x.Trackings)
-            .Any(x => x.Id == callerContext.User.Id && 
-                x.Trackings != null && 
+            .Any(x => x.Id == callerContext.User.Id &&
+                x.Trackings != null &&
                 x.Trackings.Count > 0 &&
                 x.Trackings.OrderBy(x => x.Id).Last().TrackingType == TrackingType.Started);
+    }
+
+    [HttpGet("GetAll")]
+    public List<Tracking> GetAll(AppDbContext db, CallerContext callerContext)
+    {
+        return db.Users
+            .Include(x => x.Trackings)
+            .First(x => x.Id == callerContext.User.Id)
+            .Trackings;
+    }
+
+    [HttpGet("GetAll/{from}/{to}")]
+    public List<Tracking> GetAll(AppDbContext db, CallerContext callerContext, DateOnly? from, DateOnly? to)
+    {
+        return db.Users
+            .Include(x => x.Trackings)
+            .FirstOrDefault(x => x.Id == callerContext.User.Id)?
+            .Trackings
+            .Where(x => (from is null || DateOnly.FromDateTime(x.TimeStamp) >= from) &&
+                        (to is null || DateOnly.FromDateTime(x.TimeStamp) <= to))
+            .ToList() ?? [];
     }
 }

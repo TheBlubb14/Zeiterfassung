@@ -1,4 +1,6 @@
-﻿namespace Zeiterfassung.Api.Database;
+﻿using System.Text.Json.Serialization;
+
+namespace Zeiterfassung.Api.Database;
 
 public class Tracking
 {
@@ -21,5 +23,6 @@ public class Tracking
     /// Each tracking needs to have a user. (required)
     /// </summary>
     /// <remarks>Foreign key to <see cref="User.Trackings"/></remarks>
+    [JsonIgnore]
     public User User { get; set; } = null!;
 }

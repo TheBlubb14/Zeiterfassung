@@ -22,6 +22,11 @@ builder.Services.AddSwaggerGen(static x =>
     }
 });
 
+builder.Services.AddCors(x => x.AddPolicy("wasm", y => y
+.AllowAnyMethod()
+.AllowAnyHeader()
+.AllowAnyOrigin()));
+
 var app = builder.Build();
 
 app.MapOpenApi();
@@ -32,6 +37,7 @@ app.UseSwaggerUI(static x =>
     x.EnableTryItOutByDefault();
 });
 
+app.UseCors("wasm");
 app.UseMiddleware<ApiKeyMiddleware>();
 app.UseHttpsRedirection();
 
